@@ -1,0 +1,9 @@
+import 'package:dartz/dartz.dart';
+
+abstract class TVRepository {
+  Future<Either> getPopularTV();
+  Future<Either> getRecommendationTVs(int tvId);
+  Future<Either> getSimilarTVs(int tvId);
+  Future<Either> getKeyword(int tvId);
+  Future<Either> seacrhTV(String query);
+}
