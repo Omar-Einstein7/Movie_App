@@ -8,6 +8,7 @@ import 'package:movie_app/data/tv/repo/tv.dart';
 import 'package:movie_app/data/tv/sources/tv.dart';
 
 import 'package:movie_app/domain/auth/usecases/is_logged_in.dart';
+import 'package:movie_app/domain/auth/usecases/logout.dart';
 
 import 'package:movie_app/domain/auth/usecases/signup.dart';
 import 'package:movie_app/domain/movie/repo/movie.dart';
@@ -46,18 +47,22 @@ void setupServiceLocator() {
   //Usecases
   sl.registerSingleton<SignupUseCase>(SignupUseCase());
   sl.registerSingleton<SigninUseCase>(SigninUseCase());
+  sl.registerSingleton<LogoutUseCase>(LogoutUseCase());
   sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
   sl.registerSingleton<GetTrandingMoviesUseCases>(GetTrandingMoviesUseCases());
   sl.registerSingleton<GetNowPlayingMoviesUseCase>(
-      GetNowPlayingMoviesUseCase());
+    GetNowPlayingMoviesUseCase(),
+  );
   sl.registerSingleton<GetPopularTvUseCase>(GetPopularTvUseCase());
   sl.registerSingleton<GetMovieTrailerUseCase>(GetMovieTrailerUseCase());
   sl.registerSingleton<GetReommendationMovieUseCase>(
-      GetReommendationMovieUseCase());
+    GetReommendationMovieUseCase(),
+  );
   sl.registerSingleton<GetSimilarMoviesUseCase>(GetSimilarMoviesUseCase());
   sl.registerSingleton<GetSimilarTvsUseCase>(GetSimilarTvsUseCase());
   sl.registerSingleton<GetRecommendationsTvsUseCase>(
-      GetRecommendationsTvsUseCase());
+    GetRecommendationsTvsUseCase(),
+  );
   sl.registerSingleton<GetTVKeywordsUseCase>(GetTVKeywordsUseCase());
 
   sl.registerSingleton<SearchMoviesUsecase>(SearchMoviesUsecase());

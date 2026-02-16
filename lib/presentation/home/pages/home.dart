@@ -3,11 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_app/common/helper/navigation/app_navigation.dart';
 import 'package:movie_app/common/widgets/appbar/app_bar.dart';
 import 'package:movie_app/core/config/assets/app_vectors.dart';
+import 'package:movie_app/domain/auth/usecases/logout.dart';
+import 'package:movie_app/presentation/auth/pages/signin.dart';
 import 'package:movie_app/presentation/home/widgets/category_text.dart';
 import 'package:movie_app/presentation/home/widgets/now_playing_movies.dart';
 import 'package:movie_app/presentation/home/widgets/popular_tv.dart';
 import 'package:movie_app/presentation/home/widgets/trending_movies.dart';
 import 'package:movie_app/presentation/search/pages/search.dart';
+import 'package:movie_app/service_locator.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,9 +20,23 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: BasicAppbar(
         hideBack: true,
-        action: IconButton(onPressed: () {
-          AppNavigator.push(context,const SearchPage() );
-        }, icon: Icon(Icons.search)),
+        action: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                AppNavigator.push(context, const SearchPage());
+              },
+              icon: Icon(Icons.search),
+            ),
+            IconButton(
+              onPressed: () async {
+                await sl<LogoutUseCase>().call();
+                AppNavigator.pushAndRemove(context, SigninScreen());
+              },
+              icon: Icon(Icons.logout),
+            ),
+          ],
+        ),
         title: SvgPicture.asset(AppVectors.logo),
       ),
       body: SingleChildScrollView(
@@ -28,19 +45,13 @@ class HomeScreen extends StatelessWidget {
           children: [
             CategoryText(title: "Trending"),
             TrendingMovies(),
-            SizedBox(
-              height: 16,
-            ),
+            SizedBox(height: 16),
             CategoryText(title: "Now Playing"),
             NowPlayingMovies(),
-            SizedBox(
-              height: 16,
-            ),
+            SizedBox(height: 16),
             CategoryText(title: "Popular TV"),
             PopularTV(),
-            SizedBox(
-              height: 16,
-            ),
+            SizedBox(height: 16),
           ],
         ),
       ),

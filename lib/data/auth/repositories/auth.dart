@@ -9,8 +9,6 @@ import '../../../service_locator.dart';
 import '../models/signin_req_params.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
-
- 
   @override
   Future<Either> signup(SignupReqParams params) async {
     var data = await sl<AuthService>().signup(params);
@@ -19,13 +17,14 @@ class AuthRepositoryImpl extends AuthRepository {
         return Left(error);
       },
       (data) async {
-        final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        sharedPreferences.setString('token',data['user']['token']);
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('token', data['user']['token']);
         return Right(data);
-      }
+      },
     );
   }
-  
+
   @override
   Future<Either> signin(SigninReqParams params) async {
     var data = await sl<AuthService>().signin(params);
@@ -34,16 +33,30 @@ class AuthRepositoryImpl extends AuthRepository {
         return Left(error);
       },
       (data) async {
-        final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-        sharedPreferences.setString('token',data['user']['token']);
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('token', data['user']['token']);
         return Right(data);
-      }
+      },
     );
   }
-  
+
+  @override
+  Future<Either> logout() async {
+    try {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      await sharedPreferences.remove('token');
+      return Right(true);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
   @override
   Future<bool> isLoggedIn() async {
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
     var token = sharedPreferences.getString('token');
     if (token == null) {
       return false;
@@ -51,5 +64,4 @@ class AuthRepositoryImpl extends AuthRepository {
       return true;
     }
   }
-
 }
