@@ -8,12 +8,13 @@ class VideoVoteAverage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(
-          Icons.star,
-          color: Colors.amber,
-          size: 20,
+        const Icon(Icons.star, color: Colors.amber, size: 20),
+        Text(
+          " ${voteAverage.toStringAsFixed(1)}",
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
-        Text(" " + voteAverage.toStringAsFixed(1)),
       ],
     );
   }

@@ -10,16 +10,14 @@ abstract class MovieService {
   Future<Either> getMovieTrailer(int movieid);
   Future<Either> getRecommendationMovies(int movieid);
   Future<Either> getSimilarMovies(int movieid);
-  Future<Either> SearchMovie(String query);
+  Future<Either> searchMovie(String query);
 }
 
 class MovieApiServiceImpl extends MovieService {
   @override
   Future<Either> getTrendingMovies() async {
     try {
-      var response = await sl<DioClient>().get(
-        ApiUrl.trendingMovies,
-      );
+      var response = await sl<DioClient>().get(ApiUrl.trendingMovies);
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);
@@ -29,9 +27,7 @@ class MovieApiServiceImpl extends MovieService {
   @override
   Future<Either> getNowPlayingMovies() async {
     try {
-      var response = await sl<DioClient>().get(
-        ApiUrl.nowPlayingMovies,
-      );
+      var response = await sl<DioClient>().get(ApiUrl.nowPlayingMovies);
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);
@@ -42,44 +38,42 @@ class MovieApiServiceImpl extends MovieService {
   Future<Either> getMovieTrailer(int movieid) async {
     try {
       var response = await sl<DioClient>().get(
-        ApiUrl.movie + "$movieid/trailer",
+        "${ApiUrl.movie}$movieid/trailer",
       );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);
     }
   }
-  
+
   @override
-  Future<Either> getRecommendationMovies(int movieid)async {
-     try {
-      var response = await sl<DioClient>().get(
-        ApiUrl.movie + "$movieid/recommendations",
-      );
-      return Right(response.data);
-    } on DioException catch (e) {
-      return Left(e.response!.data['message']);
-    }
-  }
-  
-  @override
-  Future<Either> getSimilarMovies(int movieid) async{
+  Future<Either> getRecommendationMovies(int movieid) async {
     try {
       var response = await sl<DioClient>().get(
-        ApiUrl.movie + "$movieid/similar",
+        "${ApiUrl.movie}$movieid/recommendations",
       );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);
     }
   }
-  
+
   @override
-  Future<Either> SearchMovie(String query) async{
+  Future<Either> getSimilarMovies(int movieid) async {
     try {
       var response = await sl<DioClient>().get(
-        ApiUrl.search + "movie/${query}",
+        "${ApiUrl.movie}$movieid/similar",
       );
+      return Right(response.data);
+    } on DioException catch (e) {
+      return Left(e.response!.data['message']);
+    }
+  }
+
+  @override
+  Future<Either> searchMovie(String query) async {
+    try {
+      var response = await sl<DioClient>().get("${ApiUrl.search}movie/$query");
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);

@@ -79,8 +79,8 @@ class MovieRepoImpl extends MovieRepo {
   }
   
   @override
-  Future<Either> SearchMovie(String query) async{
-      var returnedData = await sl<MovieService>().SearchMovie(query);
+  Future<Either> searchMovie(String query) async{
+      var returnedData = await sl<MovieService>().searchMovie(query);
 
     return returnedData.fold((error) {
       return Left(error);

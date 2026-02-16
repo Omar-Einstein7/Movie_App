@@ -8,6 +8,6 @@ import '../../../core/usecases/usecase.dart';
 class SearchTvUsecase extends Usecase<Either, String> {
   @override
   Future<Either> call({String ? params}) async {
-    return await sl<TVRepository>().seacrhTV(params!);
+    return await sl<TVRepository>().searchTV(params!);
   }
 }

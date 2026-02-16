@@ -11,11 +11,11 @@ class VideoReleaseDate extends StatelessWidget {
         Icon(
           Icons.calendar_month,
           size: 20,
-          color: Colors.grey,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
         ),
         Text(
           " ${releaseDate.toString().split(" ")[0]}" ,
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
         )
       ],
     );

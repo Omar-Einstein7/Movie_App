@@ -6,18 +6,6 @@ class VideoOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "OverView",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(overiew, style: Theme.of(context).primaryTextTheme.bodyMedium)
-      ],
-    );
+    return Text(overiew, style: Theme.of(context).textTheme.bodyMedium);
   }
 }

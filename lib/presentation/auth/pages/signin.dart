@@ -8,7 +8,7 @@ import 'package:movie_app/core/config/theme/app_colors.dart';
 import 'package:movie_app/data/auth/models/signin_req_params.dart';
 
 import 'package:movie_app/presentation/auth/pages/signup.dart';
-import 'package:movie_app/presentation/home/pages/home.dart';
+import 'package:movie_app/presentation/main/pages/main_page.dart';
 import 'package:movie_app/service_locator.dart';
 import 'package:reactive_button/reactive_button.dart';
 
@@ -22,7 +22,6 @@ class SigninScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       body: SafeArea(
         minimum: const EdgeInsets.only(top: 80, right: 16, left: 16),
         child: SingleChildScrollView(
@@ -33,15 +32,15 @@ class SigninScreen extends StatelessWidget {
             children: [
               _logo(),
               const SizedBox(height: 20),
-              _signinText(),
+              _signinText(context),
               const SizedBox(height: 30),
-              _emailField(),
+              _emailField(context),
               const SizedBox(height: 20),
-              _passwordField(),
+              _passwordField(context),
               const SizedBox(height: 60),
               _signinButton(context),
               const SizedBox(height: 20),
-              _signupText(context)
+              _signupText(context),
             ],
           ),
         ),
@@ -57,34 +56,33 @@ class SigninScreen extends StatelessWidget {
     );
   }
 
-  Widget _signinText() {
-    return const Text(
+  Widget _signinText(BuildContext context) {
+    return Text(
       'Sign In',
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 24,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.onSurface,
       ),
       textAlign: TextAlign.center,
     );
   }
 
-  Widget _emailField() {
+  Widget _emailField(BuildContext context) {
     return TextField(
       controller: _emailCon,
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
       decoration: const InputDecoration(
         hintText: 'Email',
-        hintStyle: TextStyle(color: Colors.grey),
       ),
     );
   }
 
-  Widget _passwordField() {
+  Widget _passwordField(BuildContext context) {
     return TextField(
       controller: _passwordCon,
       obscureText: true,
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
       decoration: const InputDecoration(
         hintText: 'Password',
         hintStyle: TextStyle(color: Colors.grey),
@@ -96,12 +94,14 @@ class SigninScreen extends StatelessWidget {
     return ReactiveButton(
       title: 'Sign In',
       activeColor: AppColors.primary,
-      onPressed: () async =>
-         sl<SigninUseCase>().call(
-          params: SigninReqParams(
-              email: _emailCon.text, password: _passwordCon.text)),
+      onPressed: () async => sl<SigninUseCase>().call(
+        params: SigninReqParams(
+          email: _emailCon.text,
+          password: _passwordCon.text,
+        ),
+      ),
       onSuccess: () {
-        AppNavigator.pushAndRemove(context, const HomeScreen());
+        AppNavigator.pushAndRemove(context, const MainPage());
       },
       onFailure: (error) {
         DisplayMessage.errorMessage(error, context);
@@ -113,9 +113,9 @@ class SigninScreen extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          const TextSpan(
+          TextSpan(
             text: "Don't you have account? ",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           ),
           TextSpan(
             text: 'Sign Up',

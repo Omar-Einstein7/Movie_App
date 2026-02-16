@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/common/bloc/generic_data_cubit.dart';
 import 'package:movie_app/common/bloc/generic_data_state.dart';
-import 'package:movie_app/common/widgets/movies/movie_card.dart';
 import 'package:movie_app/common/widgets/tv/tv_card.dart';
-import 'package:movie_app/domain/movie/entities/movie.dart';
-import 'package:movie_app/domain/movie/usecases/get_reommendation_movie.dart';
 import 'package:movie_app/domain/tv/entities/tv.dart';
 import 'package:movie_app/domain/tv/usecases/get_recommendations_tvs.dart';
 import 'package:movie_app/service_locator.dart';
@@ -31,7 +28,9 @@ class RecommendationTVs extends StatelessWidget {
               children: [
                 Text(
                   "Recommendation",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 16,),
                 SizedBox(

@@ -1,6 +1,5 @@
 
 
-import 'package:movie_app/core/config/assets/app_image.dart';
 
 class TVEntity {
   TVEntity({

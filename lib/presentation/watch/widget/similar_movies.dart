@@ -27,7 +27,9 @@ class SimilarMovies extends StatelessWidget {
               children: [
                 Text(
                   "Similar",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(
                   height: 16,

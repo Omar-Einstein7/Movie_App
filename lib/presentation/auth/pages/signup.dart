@@ -8,7 +8,7 @@ import 'package:movie_app/core/config/theme/app_colors.dart';
 import 'package:movie_app/data/auth/models/signup_req_params.dart';
 import 'package:movie_app/domain/auth/usecases/signup.dart';
 import 'package:movie_app/presentation/auth/pages/signin.dart';
-import 'package:movie_app/presentation/home/pages/home.dart';
+import 'package:movie_app/presentation/main/pages/main_page.dart';
 import 'package:movie_app/service_locator.dart';
 import 'package:reactive_button/reactive_button.dart';
 
@@ -21,19 +21,18 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       body: SafeArea(
-        minimum: const EdgeInsets.only( right: 16, left: 16 , bottom: 80),
+        minimum: const EdgeInsets.only(right: 16, left: 16, bottom: 80),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _logo(),
             const SizedBox(height: 20),
-            _signupText(),
+            _signupText(context),
             const SizedBox(height: 30),
-            _emailField(),
+            _emailField(context),
             const SizedBox(height: 20),
-            _passwordField(),
+            _passwordField(context),
             const SizedBox(height: 60),
             _signupButton(context),
             const SizedBox(height: 20),
@@ -48,38 +47,32 @@ class SignupScreen extends StatelessWidget {
     return SvgPicture.asset(AppVectors.logo, height: 40);
   }
 
-  Widget _signupText() {
-    return const Text(
+  Widget _signupText(BuildContext context) {
+    return Text(
       'Sign Up',
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 24,
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.onSurface,
       ),
       textAlign: TextAlign.center,
     );
   }
 
-  Widget _emailField() {
+  Widget _emailField(BuildContext context) {
     return TextField(
       controller: _emailCon,
-      style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-        hintText: 'Email',
-        hintStyle: TextStyle(color: Colors.grey),
-      ),
+      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+      decoration: const InputDecoration(hintText: 'Email'),
     );
   }
 
-  Widget _passwordField() {
+  Widget _passwordField(BuildContext context) {
     return TextField(
       controller: _passwordCon,
       obscureText: true,
-      style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-        hintText: 'Password',
-        hintStyle: TextStyle(color: Colors.grey),
-      ),
+      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+      decoration: const InputDecoration(hintText: 'Password'),
     );
   }
 
@@ -93,10 +86,11 @@ class SignupScreen extends StatelessWidget {
             email: _emailCon.text,
             password: _passwordCon.text,
           ),
-        );},
-      
+        );
+      },
+
       onSuccess: () {
-        AppNavigator.pushAndRemove(context, const HomeScreen());
+        AppNavigator.pushAndRemove(context, const MainPage());
       },
       onFailure: (error) {
         DisplayMessage.errorMessage(error, context);
@@ -108,9 +102,9 @@ class SignupScreen extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          const TextSpan(
+          TextSpan(
             text: "Do you have account? ",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           ),
           TextSpan(
             text: 'Sign In',

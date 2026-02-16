@@ -9,7 +9,7 @@ abstract class TVService {
   Future<Either> getRecommendationTVs(int tvId);
   Future<Either> getSimilarTVs(int tvId);
   Future<Either> getKeyword(int tvId);
-  Future<Either> seacrhTV(String query);
+  Future<Either> searchTV(String query);
 }
 
 class TVApiServiceImpl extends TVService {
@@ -26,10 +26,10 @@ class TVApiServiceImpl extends TVService {
   }
 
   @override
-  Future<Either> getRecommendationTVs(int tvId) async{
-       try {
+  Future<Either> getRecommendationTVs(int tvId) async {
+    try {
       var response = await sl<DioClient>().get(
-        ApiUrl.tv + "$tvId/recommendations",
+        "${ApiUrl.tv}$tvId/recommendations",
       );
       return Right(response.data);
     } on DioException catch (e) {
@@ -38,34 +38,34 @@ class TVApiServiceImpl extends TVService {
   }
 
   @override
-  Future<Either> getSimilarTVs(int tvId) async{
-      try {
+  Future<Either> getSimilarTVs(int tvId) async {
+    try {
       var response = await sl<DioClient>().get(
-        ApiUrl.tv + "$tvId/similar",
+        "${ApiUrl.tv}$tvId/similar",
       );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);
     }
   }
-  
+
   @override
-  Future<Either> getKeyword(int tvId)async {
-      try {
+  Future<Either> getKeyword(int tvId) async {
+    try {
       var response = await sl<DioClient>().get(
-        ApiUrl.tv + "$tvId/keywords",
+        "${ApiUrl.tv}$tvId/keywords",
       );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data['message']);
     }
   }
-  
+
   @override
-  Future<Either> seacrhTV(String query) async{
- try {
+  Future<Either> searchTV(String query) async {
+    try {
       var response = await sl<DioClient>().get(
-        ApiUrl.search + "tv/${query}",
+        "${ApiUrl.search}tv/$query",
       );
       return Right(response.data);
     } on DioException catch (e) {

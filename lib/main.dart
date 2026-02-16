@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/common/bloc/theme/theme_cubit.dart';
 import 'package:movie_app/core/config/theme/app_theme.dart';
 import 'package:movie_app/presentation/splash/bloc/splash_cubit.dart';
 import 'package:movie_app/presentation/splash/pages/splash.dart';
@@ -16,12 +17,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SplashCubit>(
-      create: (context) => SplashCubit()..appstarted(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.apptheme,
-        home: const SplashScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SplashCubit()..appstarted()),
+        BlocProvider(create: (context) => ThemeCubit()),
+      ],
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeMode,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

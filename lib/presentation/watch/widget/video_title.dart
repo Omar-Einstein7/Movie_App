@@ -6,9 +6,11 @@ class VideoTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title , style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 20
-    ),);
+    return Text(
+      title,
+      style: Theme.of(
+        context,
+      ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+    );
   }
 }

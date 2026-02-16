@@ -3,6 +3,6 @@ class AppImage {
   static const movieImageBasePath = "https://image.tmdb.org/t/p/original";
   
 
-  static const splashbackground = "${basepath}/splash-bg.png";
+  static const splashbackground = "$basepath/splash-bg.png";
   static const defaultImage = "";
 }

@@ -7,6 +7,6 @@ import '../../../core/usecases/usecase.dart';
 class SearchMoviesUsecase extends Usecase<Either, String> {
   @override
   Future<Either> call({String ? params}) async {
-    return await sl<MovieRepo>().SearchMovie(params!);
+    return await sl<MovieRepo>().searchMovie(params!);
   }
 }
